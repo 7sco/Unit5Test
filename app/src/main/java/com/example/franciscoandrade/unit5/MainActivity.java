@@ -1,5 +1,8 @@
 package com.example.franciscoandrade.unit5;
 
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
@@ -32,6 +35,8 @@ public class MainActivity extends AppCompatActivity {
     AdapterPerson adapterPerson;
     ProgressBar progrssDiscovery;
 
+    SQLite_OpenHelper helper= new SQLite_OpenHelper(this, "DB1", null, 1);
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,9 +48,9 @@ public class MainActivity extends AppCompatActivity {
         recyclerHolder.setHasFixedSize(true);
         final GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2);
         recyclerHolder.setLayoutManager(gridLayoutManager);
-        retrofitConn();
-        obtenerDatos();
 
+            retrofitConn();
+            obtenerDatos();
 
     }
 
@@ -60,8 +65,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         Toast.makeText(this, "Selected: "+item.toString(), Toast.LENGTH_SHORT).show();
+        progrssDiscovery.setVisibility(View.VISIBLE);
         obtenerDatos();
-
         adapterPerson.notifyDataSetChanged();
         return super.onOptionsItemSelected(item);
     }
@@ -86,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
                     newList=response.body().getResults();
                     adapterPerson.addImages(newList);
                 }
-                progrssDiscovery.setVisibility(View.INVISIBLE);
+
             }
 
             @Override
@@ -94,6 +99,7 @@ public class MainActivity extends AppCompatActivity {
                 progrssDiscovery.setVisibility(View.INVISIBLE);
             }
         });
+        progrssDiscovery.setVisibility(View.INVISIBLE);
     }
 
 }
