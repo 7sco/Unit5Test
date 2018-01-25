@@ -19,7 +19,8 @@
         android:theme="@style/Theme.AppCompat.Light"
         android:visibility="visible"
         tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="204dp" />
+        tools:layout_editor_absoluteY="204dp"
+        tools:ignore="MissingConstraints" />
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerHolder"
         android:layout_width="match_parent"

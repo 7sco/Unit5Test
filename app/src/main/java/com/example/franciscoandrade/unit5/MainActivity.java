@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
         recyclerHolder.setHasFixedSize(true);
         final GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2);
         recyclerHolder.setLayoutManager(gridLayoutManager);
-
+        progrssDiscovery.setVisibility(View.VISIBLE);
             retrofitConn();
             obtenerDatos();
 
