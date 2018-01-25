@@ -9,6 +9,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.franciscoandrade.unit5.apiNetworking.ServiceApi;
@@ -29,12 +30,14 @@ public class MainActivity extends AppCompatActivity {
     List<Result> newList;
     RecyclerView recyclerHolder;
     AdapterPerson adapterPerson;
+    ProgressBar progrssDiscovery;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         recyclerHolder=(RecyclerView)findViewById(R.id.recyclerHolder);
+        progrssDiscovery = (ProgressBar) findViewById(R.id.progrssDiscovery);
         adapterPerson= new AdapterPerson(this);
         recyclerHolder.setAdapter(adapterPerson);
         recyclerHolder.setHasFixedSize(true);
@@ -42,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
         recyclerHolder.setLayoutManager(gridLayoutManager);
         retrofitConn();
         obtenerDatos();
+
 
     }
 
@@ -71,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
 
         ServiceApi service = retrofit.create(ServiceApi.class);
         Call<RootObject> response = service.getResponseGet();
-
+        progrssDiscovery.setVisibility(View.VISIBLE);
         response.enqueue(new Callback<RootObject>() {
             @Override
             public void onResponse(Call<RootObject> call, Response<RootObject> response) {
@@ -82,12 +86,12 @@ public class MainActivity extends AppCompatActivity {
                     newList=response.body().getResults();
                     adapterPerson.addImages(newList);
                 }
-
+                progrssDiscovery.setVisibility(View.INVISIBLE);
             }
 
             @Override
             public void onFailure(Call<RootObject> call, Throwable t) {
-
+                progrssDiscovery.setVisibility(View.INVISIBLE);
             }
         });
     }
